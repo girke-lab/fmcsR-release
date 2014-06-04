@@ -25,12 +25,12 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
     const char** sdfOneSize, const char** sdfTwoSize, const char** mcsSize) {
 
     if (*structureStringOne == NULL) {
-		//cout << "input structure one cannot be NULL...\n";
+		cout << "input structure one cannot be NULL...\n";
 		return;
 	}
 
 	if (*structureStringTwo == NULL) {
-		//cout << "input structure two cannot be NULL...\n";
+		cout << "input structure two cannot be NULL...\n";
 		return;
 	}
 	
@@ -134,16 +134,16 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
             list<vector<size_t> > index1 = mcs.getFirstOriginalIndice();
             list<vector<size_t> > index2 = mcs.getSecondOriginalIndice();
             
-            //cout << index1.size() << " solution(s) found..." << endl;
-            /*
+            cout << index1.size() << " solution(s) found..." << endl;
+            
             if (index1.size() > 0) {
                 for (int i = 0; i < index1.begin()->size(); ++i) {
                     cout << (*index1.begin())[i] << ", ";
                 }
                 cout << endl;
-            }*/
+            }
             
-            //cout << mcs.getFirstSdfResultStringList().size() << " solution(s) found..." << endl;
+            cout << mcs.getFirstSdfResultStringList().size() << " solution(s) found..." << endl;
             
             stringstream indexOneStringStream, indexTwoStringStream;
             for (list<vector<size_t> >::const_iterator i = index1.begin(); i != index1.end(); ++i) {
@@ -152,6 +152,7 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
             	}
             	indexOneStringStream << "\n";
             }
+				cout<<"mark1"<<endl;
             
             for (list<vector<size_t> >::const_iterator i = index2.begin(); i != index2.end(); ++i) {
             	for (vector<size_t>::const_iterator j = i->begin(); j != i->end(); ++j) {
@@ -159,13 +160,16 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
             	}
             	indexTwoStringStream << "\n";
             }
+				cout<<"mark2"<<endl;
             
             static string indexOneString, indexTwoString;
             indexOneString = indexOneStringStream.str();
             indexTwoString = indexTwoStringStream.str();
+				cout<<"mark3"<<endl;
             
             *resultIdxOne = indexOneString.c_str();
             *resultIdxTwo = indexTwoString.c_str();
+				cout<<"mark4"<<endl;
             /*
             string sdfs1, sdfs2;
             for (list<string>::const_iterator i = sdfList1.begin(); i != sdfList1.end(); ++i) {
@@ -184,6 +188,8 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
             ofstream out("out.txt");
             out << *resultSdfOne << endl;*/
         }
+
+			cout<<"mark5"<<endl;
         
         stringstream sizeStringStream;
         
@@ -192,7 +198,7 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
         cmpOneSizeString= sizeStringStream.str();
         
         sizeStringStream.str("");
-    	sizeStringStream << cmpTwoSize;
+    	  sizeStringStream << cmpTwoSize;
         static string cmpTwoSizeString;
         cmpTwoSizeString = sizeStringStream.str();
         
@@ -201,9 +207,11 @@ void fmcs_R_wrap(const char** structureStringOne, const char** structureStringTw
         static string mSizeString;
         mSizeString = sizeStringStream.str();
         
+		  cout<<"mark6"<<endl;
         *sdfOneSize = cmpOneSizeString.c_str();
         *sdfTwoSize = cmpTwoSizeString.c_str();
         *mcsSize = mSizeString.c_str();
+		  cout<<"mark7"<<endl;
 /*
 	} catch (exception& e) {
 		cerr << e.what() << endl;

@@ -58,11 +58,15 @@ function(sdf1, sdf2, al = 0, au = 0, bl = 0, bu = 0,
     mcs = as.integer(result_data$mcsSize)
 
     stats <- c(Query_Size=querySize, Target_Size=targetSize, MCS_Size=mcs, Tanimoto_Coefficient=(mcs/(querySize + targetSize - mcs)), Overlap_Coefficient=(mcs/min(c(querySize, targetSize)))) 
-    if (fast) {
+    if (fast) { #running.mode=0
+		 message("returning from fast mode")
         return(stats)
-    }
+    }else{
+		 message("getting detailed results")
 
-    if (result_data$idxOne != "") {
+		  if (result_data$idxOne == "") 
+			  stop("failed to get detailed results")
+
     
         idx1 <- strsplit(result_data$idxOne, "\n")[[1]]
         idx2 <- strsplit(result_data$idxTwo, "\n")[[1]]
@@ -93,10 +97,9 @@ function(sdf1, sdf2, al = 0, au = 0, bl = 0, bu = 0,
             listNames <- c(listNames, paste(sdf2_name, "_fmcs_", sprintf("%d", i), sep=""))
         }
         names(sdfList2) <- listNames
-	sdf1 <- as(sdf1, "SDFset"); cid(sdf1) <- sdf1_name
-	sdf2 <- as(sdf2, "SDFset"); cid(sdf2) <- sdf2_name
-	return(new("MCS", stats=stats, mcs1=list(query=sdf1, mcs1=sdfList1), mcs2=list(target=sdf2, mcs2=sdfList2)))
-            
+		  sdf1 <- as(sdf1, "SDFset"); cid(sdf1) <- sdf1_name
+		  sdf2 <- as(sdf2, "SDFset"); cid(sdf2) <- sdf2_name
+		  return(new("MCS", stats=stats, mcs1=list(query=sdf1, mcs1=sdfList1), mcs2=list(target=sdf2, mcs2=sdfList2)))
     }
     
 }
